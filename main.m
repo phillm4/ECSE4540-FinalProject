@@ -143,7 +143,27 @@ imshow(nuclBW);
 % performed. 
 %
 
+sqOpen = strel('disk',2);
+nuclMorph = imopen(nuclBW,sqOpen);
+sqClose = strel('disk',3);
+nuclMorph = imclose(nuclMorph,sqClose);
+
+figure(6);
+imshow(nuclMorph);
+
+%%
+%
+% Figure 6 is the morphologoical processed image to remove both any
+% unwanted small objects as well as remove any small holes from the
+% nucleui, hence both the opening and closeing processes. Using the binary
+% image from figure 6, the Leukocytes can be identified using the nucleui.
+% This is demomstrated below using the created function |wbcNuclei.m|
+%
+
+wbcNuclei(nuclMorph, 7)
+
 %% References
 %
 % [1]: http://www.pathologystudent.com/?p=4776
 % [2]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4485641/pdf/12938_2015_Article_37.pdf
+%
