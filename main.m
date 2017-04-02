@@ -4,7 +4,7 @@
 % ECSE 4540 - Introduction to Image Processing Final Project
 % Mitchell Phillips, 661060944
 %
-% Last Updated: April 1, 2017
+% Last Updated: April 2, 2017
 %
 
 %% Notes
@@ -19,7 +19,7 @@ clc, clear, close all;
 warning off;
 
 % import image(s)
-addpath('images/','test/');
+addpath(genpath('images/')); % edit as needed
 
 %% test001.jpg
 %
@@ -160,10 +160,66 @@ imshow(nuclMorph);
 % This is demomstrated below using the created function |wbcNuclei.m|
 %
 
-wbcNuclei(nuclMorph, 7)
+wbcNuclei(im, 7)
+
+%%
+%
+% Figure 7 is the original image with any Leukocytes marked and identified.
+% Using these results, the entire process of splitting the color channels
+% averaging the levels, histogram equalization, thresholding, and
+% morphological processing was placed into a single function, |wbcNuclei.m|
+% that can detect Leukocytes based on the nuclei stain. 
+%
+
+%% 
+%
+% The effectivness of |wbcNuclei.m| for Leukocyte identification is
+% demonstrated below using a series of images. Each test image was
+% inspected aftwards to evaluate if all Leukocytes have been accounted for.
+% 
+
+
+imN1 = imread('4303059.jpg');
+wbcNuclei(imN1, 8);
+imN2 = imread('4303041.jpg');
+wbcNuclei(imN2, 9);
+imN3 = imread('4303101.jpg');
+wbcNuclei(imN3, 10);
+imN4 = imread('4304032.jpg');
+wbcNuclei(imN4, 11);
+
+%%
+%
+% Figures 8 through 11 demonstrate the capabilities of the
+% created |wbcNuclei.m| function. Based on the above results, it is
+% observed that the identification works well for most images. However,
+% the identification in figure 11 is rather poor. From inspection, it is
+% clear that there is one Leukocyte in the center of the image with another
+% cut off on the right-hand side. Results over estimated the number of
+% leukocytes. Errors in figure 11 were investigated further.
+%
+
+wbcNuclei(imN4, 12);
+
+%%
+%
+% After debugging the function, it was determined to increase the 
+% morphological structuring element size for closing the image from 3 to
+% 15. Doing so increased the size of any holes that may form in the binary
+% image, causing inaccuracies when counting. 
+%
+
+%%
+%
+
+for i = 1:9
+    imN = imread(['430302',num2str(i),'.jpg']);
+    wbcNuclei(imN, 12 + i);
+end
 
 %% References
 %
 % [1]: http://www.pathologystudent.com/?p=4776
+%
 % [2]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4485641/pdf/12938_2015_Article_37.pdf
 %
