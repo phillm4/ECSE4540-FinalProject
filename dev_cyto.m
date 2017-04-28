@@ -80,6 +80,12 @@ title('Green Channel')
 subplot(2,2,4), imshow(B)
 title('Blue Channel')
 
+level = graythresh(imgray)*255;
+BW_Otsu  = imgray < level;
+figure(102);
+imshow(BW_Otsu);
+title('Prob 6: Otsu Graythresh');
+
 %%
 %
 % Figure 2 contains the grayscale, red, green, and blue channels, of the
@@ -300,7 +306,7 @@ batch = unique(round((b-a).*rand(50,1) + a));
 for i = 1:length(batch)
     try
         imN = imread(['BloodImage_00',num2str(batch(i)),'.jpg']);
-        wbcNuclei_v06(imN, openStrl, closeStrl, tune, 12+i)
+        wbcNuclei_v07(imN, openStrl, closeStrl, tune, 12+i)
     catch ME
         if ~strcmp(ME.identifier,'MATLAB:imagesci:imread:fileDoesNotExist')
             error(ME.message)

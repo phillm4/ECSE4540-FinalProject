@@ -1,4 +1,4 @@
-function [] = wbcNuclei_v06(im, OP, CL, tune, num)
+function [] = wbcNuclei_v07(im, OP, CL, tune, num)
 %
 % wbcNuclei: Identify Leukocytes based on nulcei.
 %
@@ -48,6 +48,15 @@ for i = 1:length(r)
     rectangle('position',[r(i).Centroid(1)-n/2,r(i).Centroid(2)-n/2,n,n]...
         ,'Curvature',[1 1],'EdgeColor','g','LineWidth',2.5)
     cnt = cnt + 1;
+    
+    % cyto functions
+    A = round(r(i).Centroid(2)-n/2);
+    B = round((r(i).Centroid(2)-n/2)+n);
+    C = round(r(i).Centroid(1)-n/2);
+    D = round((r(i).Centroid(1)-n/2)+n);
+    
+     cytoExt(im, A, B, C, D)
+    
     end
 end
 

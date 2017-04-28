@@ -221,7 +221,7 @@ for i = 101:2:400
         imN = imread(['BloodImage_00',num2str(i),'.jpg']);
 %         f = wbcNuclei_v04(imN, thresh, tune, 16 + i);
 %         flags = flags + f;
-        wbcNuclei_v05(imN, 16+i)
+        wbcNuclei_v02(imN, 16+i)
         j = j+1;
     catch ME
         if ~strcmp(ME.identifier,'MATLAB:imagesci:imread:fileDoesNotExist')
@@ -285,7 +285,7 @@ CL = 15;
 tune = 65;
 %j = 0;
 %flags = [0];
-for i = 109:2:213
+for i = 300:2:413
     try
         imN = imread(['BloodImage_00',num2str(i),'.jpg']);
         wbcNuclei_v06(imN, OP, CL, tune, 16+i)
