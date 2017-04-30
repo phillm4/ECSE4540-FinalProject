@@ -40,14 +40,14 @@ imshow(im,[]);
 [m, n] = size(bw);
 
 cnt = 0;
+type = 0;
+id =0;
 
 hold on
 for i = 1:length(r)
     if r(i).Area>((m*n)/tune)
     n = 3.*sqrt(r(i).Area/pi());
-    rectangle('position',[r(i).Centroid(1)-n/2,r(i).Centroid(2)-n/2,n,n]...
-        ,'Curvature',[1 1],'EdgeColor','g','LineWidth',2.5)
-    cnt = cnt + 1;
+    col = 'g';
     
     % cyto functions
     A = round(r(i).Centroid(2)-n/2);
@@ -55,11 +55,29 @@ for i = 1:length(r)
     C = round(r(i).Centroid(1)-n/2);
     D = round((r(i).Centroid(1)-n/2)+n);
     
-     cytoExt(im, A, B, C, D)
+
+    type = cytoExt2(im, A, B, C, D);
+    
+
+    
+    if type == 1
+       % id = 1;
+        col = 'b'; % either Neutrophil or Eosinophils
+    elseif type == 2
+        col = 'm'; % Lymphocyte
+    elseif type == 3 % Monocyte
+        col = 'r';
+    end
+    
+        rectangle('position',[r(i).Centroid(1)-n/2,r(i).Centroid(2)-n/2,n,n]...
+        ,'Curvature',[1 1],'EdgeColor',col,'LineWidth',2.5)
+    cnt = cnt + 1;
     
     end
 end
 
 title(['Identified ',num2str(cnt), ' Leukacyte(s) from Nuclei'])
-
-end
+% if id ~= 0
+%     title(['Identified ',num2str(cnt),...
+%         ' Leukacyte(s). Includes Lymphocyte'])
+% end

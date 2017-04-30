@@ -297,16 +297,18 @@ openStrl = 3;
 closeStrl = 15;
 tune = 65;
 
-figNum = 12; % figure number
-a = 101;
-b = 400;
+figNum = 1; % figure number
+a = 180;
+b = 500;
 
-batch = unique(round((b-a).*rand(50,1) + a));
+batch = unique(round((b-a).*rand(100,1) + a));
 
 for i = 1:length(batch)
     try
         imN = imread(['BloodImage_00',num2str(batch(i)),'.jpg']);
+        disp(num2str(batch(i)))
         wbcNuclei_v07(imN, openStrl, closeStrl, tune, 12+i)
+        
     catch ME
         if ~strcmp(ME.identifier,'MATLAB:imagesci:imread:fileDoesNotExist')
             error(ME.message)
