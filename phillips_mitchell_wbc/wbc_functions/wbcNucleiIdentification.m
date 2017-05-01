@@ -29,6 +29,9 @@ G = imlab_adjust(:,:,2); % green channel
 B = imlab_adjust(:,:,3); % blue channel
 
 nuclBW = ((1*B)-(0.75*R))./(G); % result will be capped at 0 or 1 (255)
+level = 150;
+nuclBW = nuclBW > level; % preventative measure
+
 
 sqOpen = strel('disk',OP);
 nuclMorph = imopen(nuclBW,sqOpen);
@@ -83,7 +86,7 @@ for i = 1:length(r)
     end
 end
 
-title(['Identified ',num2str(cnt), ' Leukacyte(s) from Nuclei'])
+title(['Identified ',num2str(cnt), ' Leukocyte(s) from Nucleus'])
 
 % return information to user / output
 nuclei = cnt;
